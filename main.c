@@ -7,10 +7,12 @@
 "\nAttention: \n\n" \
 "The <data> of structure must be an integer!\n"
 
+// AVL bin tree structure
 struct tree {
     int data;
     struct tree *left;
     struct tree *right;
+    int height;
 };
 
 void printHeloInfo()
@@ -70,6 +72,7 @@ void addNode(struct tree **Tree) {
     // add Tree->data
     // add Tree->left
     // add Tree->right
+    // add Tree->height
     if(Tree == NULL) {
         printf("Unable to allocate memory!\n");
         exit(1);
@@ -79,8 +82,21 @@ void addNode(struct tree **Tree) {
     newNode->data = 0;
     newNode->left = NULL;
     newNode->right = NULL;
+    newNode->height = 1; // 1 means leave in AVL Tree
 
 
+    if(*Tree == NULL) { // The Tree is empty
+        Tree = newNode;
+    } else { // Add Node if the Tree isn't empty
+
+    }
+
+}
+
+void refactorAVLTree(struct tree **Tree) {
+    // Before refactoring count Nodes and Leaves (should be only 1 or -1)
+    // Left rotation is to move parent to left side of its child
+    // Rigth rotation is to move parent to right side of its child
 }
 
 int main(int argc, char *argv[])
@@ -103,9 +119,10 @@ int main(int argc, char *argv[])
         // addNode();
     }
 
-    while(Tree != NULL) {
-        struct tree *temp = Tree;
-    }
+    // while(Tree != NULL) { // Finish memory free
+    //     struct tree *temp = Tree;
+    //     free(temp);
+    // }
 
     return 1;
 }
