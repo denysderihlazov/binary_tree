@@ -9,7 +9,7 @@
 
 // AVL bin tree structure
 struct tree {
-    int data;
+    int key;
     struct tree *left;
     struct tree *right;
     int height;
@@ -68,35 +68,47 @@ int parseCharToInt(char *str)
     return answer;
 }
 
-void addNode(struct tree **Tree) {
-    // add Tree->data
+void addNode(int key, struct tree **Root) {
+    // add Tree->key
     // add Tree->left
     // add Tree->right
-    // add Tree->height
-    if(Tree == NULL) {
+    if(Root == NULL) {
         printf("Unable to allocate memory!\n");
         exit(1);
     }
 
     struct tree *newNode = malloc(sizeof(struct tree));
-    newNode->data = 0;
+    newNode->key = key;
     newNode->left = NULL;
     newNode->right = NULL;
     newNode->height = 1; // 1 means leave in AVL Tree
+    
 
-
-    if(*Tree == NULL) { // The Tree is empty
-        Tree = newNode;
+    if(*Root == NULL) { // The Tree is empty
+        *Root = newNode;
     } else { // Add Node if the Tree isn't empty
+        //need to check elements in the Tree and check if there are any comparison
 
+        struct tree *currentNode = *Root;
+
+        
+
+        if(newNode->key == currentNode->key) {
+            printf("Tree key already exists!\n");
+            // handle case!
+        } else if(newNode->key > currentNode->key) {
+            //move right
+            if(currentNode->right != NULL) {
+                currentNode = currentNode->right;
+            } 
+        } else if(newNode->key < currentNode->key){
+            //move left
+            if(currentNode->left != NULL) {
+                currentNode = currentNode->left;
+            } 
+        }
     }
 
-}
-
-void refactorAVLTree(struct tree **Tree) {
-    // Before refactoring count Nodes and Leaves (should be only 1 or -1)
-    // Left rotation is to move parent to left side of its child
-    // Rigth rotation is to move parent to right side of its child
 }
 
 int main(int argc, char *argv[])
@@ -106,7 +118,7 @@ int main(int argc, char *argv[])
     }
 
     struct tree *Tree = malloc(sizeof(struct tree));
-    Tree->data = 0;
+    Tree->key = 0;
     Tree->left = NULL;
     Tree->right = NULL;
 
@@ -115,8 +127,8 @@ int main(int argc, char *argv[])
     }
 
     if(argc == 2) {
-        // parseCharToInt(argv[1]);
-        // addNode();
+        int key = parseCharToInt(argv[1]);
+        addNode(key, &Tree);
     }
 
     // while(Tree != NULL) { // Finish memory free
